@@ -103,25 +103,7 @@ body > label.tgui-a1dc55b304d32032,
   opacity: 0.9;
 }
 
-.wallet-pill {
-  grid-column: 2;
-  justify-self: center;
-  width: 100%;
-  max-width: min(100%, 280px);
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 999px;
-  background: var(--wallet-gold);
-  color: #000000;
-  cursor: pointer;
-  font: inherit;
-  box-shadow: 0 2px 10px rgba(255, 193, 69, 0.25);
-}
+
 
 .wallet-pill:active {
   transform: scale(0.98);

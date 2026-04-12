@@ -8,7 +8,6 @@ export const createSendSchema = (maxTonAmount: number) =>
       .regex(/^[A-Za-z0-9_-]+$/, "Неверный формат TON-адреса"),
     amount: z
       .number({ invalid_type_error: "Введите сумму" })
-      .positive("Сумма должна быть больше 0")
       .max(maxTonAmount, "Недостаточно средств")
   });
 

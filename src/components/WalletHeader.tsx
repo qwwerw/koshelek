@@ -95,7 +95,7 @@ export const WalletHeader = () => {
     await openConnectModal();
   };
 
-  const pillLabel = "Кошелёк";
+  // const pillLabel = "Кошелёк";
 
   return (
     <header className="wallet-header">
@@ -107,13 +107,6 @@ export const WalletHeader = () => {
           aria-label="Аккаунт"
         >
           <HeaderIconAccount />
-        </button>
-        <button className="wallet-pill" type="button" onClick={() => void handlePillClick()}>
-          <span className="wallet-pill-emoji" aria-hidden="true">
-            {isConnected ? "😀" : "👛"}
-          </span>
-          <span className="wallet-pill-text">{pillLabel}</span>
-          <ChevronDown />
         </button>
         <div className="wallet-header-side wallet-header-side--spacer" aria-hidden="true" />
       </div>
