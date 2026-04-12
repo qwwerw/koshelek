@@ -2,7 +2,7 @@ import { Button, Modal, Section } from "@telegram-apps/telegram-ui";
 import { QRCodeSVG } from "qrcode.react";
 import toast from "react-hot-toast";
 import { useAppStore } from "../../store/useAppStore";
-import { useTonConnect } from "../../hooks/useTonConnect";
+import { useOpenConnectModal } from "../../hooks/useOpenConnectModal";
 
 const ReceiveIcon = () => (
   <svg viewBox="0 0 24 24" className="receive-empty-icon-svg" aria-hidden="true">
@@ -15,7 +15,7 @@ export const ReceiveModal = () => {
   const closeModal = useAppStore((state) => state.closeModal);
   const isConnected = useAppStore((state) => state.isConnected);
   const walletAddress = useAppStore((state) => state.walletAddress);
-  const { openConnectModal } = useTonConnect();
+  const openConnectModal = useOpenConnectModal();
 
   const copyAddress = async () => {
     if (!walletAddress) return;

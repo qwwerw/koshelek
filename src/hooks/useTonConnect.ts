@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTonAddress, useTonConnectUI } from "@tonconnect/ui-react";
 import toast from "react-hot-toast";
 import { useAppStore } from "../store/useAppStore";
@@ -12,6 +12,31 @@ export const useTonConnect = () => {
   const setIsConnected = useAppStore((state) => state.setIsConnected);
   const setBalance = useAppStore((state) => state.setBalance);
   const setWalletAddress = useAppStore((state) => state.setWalletAddress);
+
+  const prevAddressRef = useRef("");
+  const [restorationDone, setRestorationDone] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    void tonConnectUI.connectionRestored.finally(() => {
+      if (cancelled) return;
+      prevAddressRef.current = tonConnectUI.account?.address ?? "";
+      setRestorationDone(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [tonConnectUI]);
+
+  useEffect(() => {
+    if (!restorationDone) return;
+    const prev = prevAddressRef.current;
+    const next = address || "";
+    if (next && !prev) {
+      toast.success("Кошелёк подключён");
+    }
+    prevAddressRef.current = next;
+  }, [address, restorationDone]);
 
   useEffect(() => {
     let cancelled = false;
@@ -57,7 +82,6 @@ export const useTonConnect = () => {
   const openConnectModal = async () => {
     try {
       await tonConnectUI.openModal();
-      toast.success("Кошелёк подключён");
     } catch {
       toast.error("Ошибка подключения кошелька");
     }

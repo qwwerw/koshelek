@@ -12,8 +12,8 @@ const manifestUrl =
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <TonConnectUIProvider manifestUrl={manifestUrl}>
-      <AppRoot>
+    <TonConnectUIProvider manifestUrl={manifestUrl} restoreConnection>
+      <AppRoot appearance="dark">
         <App />
         <Toaster position="top-center" />
       </AppRoot>

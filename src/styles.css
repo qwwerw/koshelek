@@ -1,231 +1,340 @@
-
 :root {
-  --ref-bg: #000000;
-  --ref-surface: #1c1c1e;
-  --ref-stroke: #2c2c2e;
-  --ref-muted: #8e8e93;
-  --ref-yellow: #fcc444;
-  --ref-blue: #007aff;
+  --wallet-bg: #000000;
+  --wallet-gold: #ffc145;
+  --wallet-blue: #007aff;
+  --wallet-muted: #8e8e93;
+  --wallet-circle: #2c2c2e;
+  --wallet-icon-stroke: #ffffff;
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #ffffff;
-  background: var(--ref-bg);
+  color: var(--tg-theme-text-color, #fff);
+  background: var(--tg-theme-bg-color, var(--wallet-bg));
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  color-scheme: dark;
+}
+
 body {
   margin: 0;
-  background: var(--ref-bg);
+  background: var(--wallet-bg);
+}
+
+/* Полоска-индикатор «шторки» в шапке модалок Telegram UI */
+.tgui-f67c8fb3553eee55::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* Переключатель темы (солнце/луна), если библиотека монтирует его в корень */
+body > label.tgui-a1dc55b304d32032,
+.tgui-6a12827a138e8827 > label.tgui-a1dc55b304d32032 {
+  display: none !important;
 }
 
 .app-container {
   min-height: 100vh;
   max-width: 460px;
   margin: 0 auto;
-  padding: 14px 16px 24px;
-  background: var(--ref-bg);
+  padding: 16px 14px 24px;
+  background: var(--wallet-bg);
 }
 
-/* ——— Шапка в духе @wallet (TON) ——— */
-
-.wallet-header-ton {
-  padding: 6px 2px 0;
+.wallet-header {
+  padding: 4px 0 0;
+  background: transparent;
 }
 
-.wallet-header-ton__top {
-  display: flex;
+.wallet-header-bar {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 40px;
   align-items: center;
-  gap: 12px;
-  min-height: 56px;
+  gap: 8px;
+  border: none;
+  box-shadow: none;
 }
 
-.wallet-avatar-btn {
-  flex: 0 0 auto;
-  width: 48px;
-  height: 48px;
+.wallet-header-icon-btn {
+  width: 40px;
+  height: 40px;
   padding: 0;
   border: none;
-  border-radius: 50%;
+  border-radius: 999px;
   background: transparent;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 0 2px var(--ref-yellow);
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  flex-shrink: 0;
+  box-shadow: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.wallet-avatar-btn:active {
+.wallet-header-icon-btn:active {
+  opacity: 0.72;
+}
+
+.wallet-header-icon-btn:focus-visible {
+  outline: 2px solid var(--wallet-blue);
+  outline-offset: 2px;
+}
+
+.wallet-header-side--spacer {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.wallet-header-icon-svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--wallet-icon-stroke);
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   opacity: 0.9;
-  transform: scale(0.98);
 }
 
-.wallet-header-ton__balance-wrap {
-  flex: 1;
+.wallet-pill {
+  grid-column: 2;
+  justify-self: center;
+  width: 100%;
+  max-width: min(100%, 280px);
   min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 999px;
+  background: var(--wallet-gold);
+  color: #000000;
+  cursor: pointer;
+  font: inherit;
+  box-shadow: 0 2px 10px rgba(255, 193, 69, 0.25);
 }
 
-.wallet-header-ton__balance {
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 1.1;
-  color: #ffffff;
-  text-align: center;
-  letter-spacing: -0.03em;
+.wallet-pill:active {
+  transform: scale(0.98);
 }
 
-.wallet-header-ton__top-spacer {
-  width: 48px;
-  height: 48px;
+.wallet-pill-emoji {
+  font-size: 20px;
+  line-height: 1;
   flex-shrink: 0;
 }
 
-.wallet-actions-ton {
-  margin-top: 22px;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+.wallet-pill-text {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.wallet-action-ton {
-  width: 100%;
-  padding: 0;
+.wallet-pill-chevron {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  opacity: 0.55;
+}
+
+.wallet-balance-row {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   border: none;
-  border-radius: 0;
+  box-shadow: none;
+}
+
+.wallet-balance-row::before,
+.wallet-balance-row::after {
+  display: none !important;
+  content: none !important;
+}
+
+.wallet-balance {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.05;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  border: none;
+  box-shadow: none;
+  text-decoration: none;
+}
+
+.wallet-balance::before,
+.wallet-balance::after {
+  display: none !important;
+  content: none !important;
+}
+
+.wallet-ton-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--wallet-blue);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wallet-ton-badge-svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.wallet-address-row {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 2px;
+}
+
+.wallet-address-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--wallet-muted);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* Ручка vaul / шторки — часто выглядит как серая полоска под балансом, если портал остаётся в DOM */
+[data-vaul-handle],
+[data-vaul-drawer-handle] {
+  display: none !important;
+}
+
+.logout-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.logout-modal-text {
+  margin: 0 0 4px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--wallet-muted);
+  text-align: center;
+}
+
+.wallet-actions {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.action-button {
+  width: 100%;
+  border: none;
   background: transparent;
-  color: inherit;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 8px;
+  gap: 0;
   cursor: pointer;
+  color: inherit;
   font: inherit;
-  min-height: 0;
-  transition: transform 0.12s ease, opacity 0.12s ease;
 }
 
-.wallet-action-ton:active {
-  transform: scale(0.97);
-  opacity: 0.88;
+.action-button:active .action-button-circle {
+  transform: scale(0.96);
 }
 
-.wallet-action-ton__icon {
+.action-button-circle {
   width: 56px;
   height: 56px;
-  border-radius: 50%;
+  border-radius: 999px;
+  background: var(--wallet-circle);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--ref-surface);
-  border: 1px solid var(--ref-stroke);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease;
 }
 
 .action-icon-svg {
   width: 22px;
   height: 22px;
   fill: none;
-  stroke: #ffffff;
+  stroke: var(--wallet-icon-stroke);
   stroke-width: 1.75;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.wallet-action-ton__label {
+.action-title {
+  margin-top: 8px;
   font-size: 11px;
   font-weight: 500;
   line-height: 1.2;
-  color: var(--ref-muted);
+  color: var(--wallet-muted);
   text-align: center;
 }
 
-/* ——— Маркетинговая плашка ——— */
-
-.marketing-banner-ton {
+.marketing-banner {
   margin-top: 14px;
-}
-
-.marketing-banner-ton__inner {
-  padding: 16px 16px 18px;
-  border-radius: 18px;
-  background: linear-gradient(112deg, #1fe0bd 0%, #17bfd0 52%, var(--ref-blue) 100%);
-  box-shadow: 0 12px 32px rgba(0, 122, 255, 0.22);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.marketing-banner-ton__text {
-  margin: 0;
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  padding: 16px;
+  border-radius: 20px;
+  background: linear-gradient(112deg, #1fe0bd 0%, #17bfd0 52%, #2b8bf2 100%);
   color: #fff;
-}
-
-@media (max-width: 560px) {
-  .wallet-header-ton__balance {
-    font-size: 34px;
-  }
-
-  .wallet-actions-ton {
-    gap: 8px;
-  }
-
-  .wallet-action-ton__icon {
-    width: 50px;
-    height: 50px;
-  }
-
-  .action-icon-svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .wallet-action-ton__label {
-    font-size: 10px;
-  }
-
-  .marketing-banner-ton__text {
-    font-size: 22px;
-  }
-}
-
-/* ——— Модалка аккаунта (выход) ——— */
-
-.account-modal-ton {
+  min-height: 128px;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  box-shadow: 0 12px 24px rgba(17, 88, 126, 0.28);
+}
+
+.marketing-content {
   width: 100%;
 }
 
-.account-modal-ton__hint {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.45;
-  color: var(--ref-muted);
-  text-align: center;
+.marketing-text {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
 }
 
-.account-modal-ton__address {
-  margin: 0;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: var(--ref-surface);
-  border: 1px solid var(--ref-stroke);
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
-  font-size: 11px;
-  line-height: 1.45;
-  word-break: break-all;
-  color: #ffffff;
-}
+@media (max-width: 560px) {
+  .app-container {
+    padding: 14px 12px 22px;
+  }
 
-/* ——— Модалки ——— */
+  .wallet-balance {
+    font-size: 34px;
+  }
+
+  .wallet-actions {
+    gap: 8px;
+  }
+
+  .marketing-text {
+    font-size: 24px;
+  }
+}
 
 .modal-form,
 .placeholder-content {
@@ -259,17 +368,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--ref-surface);
-  border: 1px solid var(--ref-stroke);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  background: var(--wallet-circle);
+  border: 1px solid #3a3a3c;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
 .receive-empty-icon-svg {
   width: 26px;
   height: 26px;
   fill: none;
-  stroke: #ffffff;
-  stroke-width: 1.75;
+  stroke: var(--wallet-icon-stroke);
+  stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -278,14 +387,14 @@ body {
   margin: 0;
   font-size: 16px;
   font-weight: 600;
-  color: #f2f3f5;
+  color: #ffffff;
 }
 
 .receive-empty-hint {
   margin: -4px 0 0;
   font-size: 13px;
   line-height: 1.4;
-  color: var(--ref-muted);
+  color: var(--wallet-muted);
   max-width: 260px;
 }
 
@@ -293,7 +402,7 @@ body {
   margin: 0;
   font-size: 13px;
   line-height: 1.35;
-  color: var(--ref-muted);
+  color: var(--wallet-muted);
   text-align: center;
 }
 
@@ -301,16 +410,16 @@ body {
   align-self: center;
   padding: 14px;
   border-radius: 16px;
-  border: 1px solid #203044;
+  border: 1px solid #3a3a3c;
   background: #f4f7fb;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
 .receive-address-card {
   padding: 12px 14px;
   border-radius: 14px;
-  border: 1px solid var(--ref-stroke);
-  background: var(--ref-surface);
+  border: 1px solid #3a3a3c;
+  background: var(--wallet-circle);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   text-align: left;
 }
@@ -322,7 +431,7 @@ body {
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--ref-muted);
+  color: var(--wallet-muted);
 }
 
 .receive-address-value {
@@ -331,7 +440,7 @@ body {
   font-size: 11px;
   line-height: 1.45;
   word-break: break-all;
-  color: #dce7f8;
+  color: #f2f2f7;
 }
 
 .receive-actions {
@@ -352,202 +461,6 @@ body {
   margin: 0;
   word-break: break-all;
   font-size: 12px;
-  color: var(--ref-muted);
+  color: var(--wallet-muted);
   line-height: 1.35;
 }
-
-:root {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: var(--tg-theme-text-color, #fff);
-  background: var(--tg-theme-bg-color, #0d1222);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background: #0b1017;
-}
-
-.app-container {
-  min-height: 100vh;
-  max-width: 460px;
-  margin: 0 auto;
-  padding: 16px 14px 24px;
-  background: #0b1017;
-}
-
-.wallet-header {
-  padding: 8px 8px 0;
-  border-radius: 20px;
-  background: transparent;
-}
-
-.wallet-top {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 64px;
-}
-
-.avatar-button {
-  position: absolute;
-  left: 0;
-  border: none;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-}
-
-.wallet-balance {
-  font-size: 42px;
-  font-weight: 700;
-  line-height: 1.1;
-  color: #ffffff;
-  text-align: center;
-  letter-spacing: -0.02em;
-}
-
-.wallet-actions {
-  margin-top: 16px;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.action-button {
-  width: 100%;
-  min-height: 82px;
-  border-radius: 16px;
-  border: 1px solid #203044;
-  background: linear-gradient(180deg, #141f2d 0%, #101a27 100%);
-  color: #f2f3f5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: pointer;
-  padding: 8px 6px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.action-button:active {
-  transform: translateY(1px) scale(0.99);
-  border-color: #2b4160;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.24);
-}
-
-.action-icon-wrap {
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #162434;
-}
-
-.action-icon-svg {
-  width: 18px;
-  height: 18px;
-  fill: none;
-  stroke: #d5e7ff;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.action-title {
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.2;
-  color: #dce7f8;
-  text-align: center;
-}
-
-.marketing-banner {
-  margin-top: 14px;
-  padding: 16px;
-  border-radius: 20px;
-  background: linear-gradient(112deg, #1fe0bd 0%, #17bfd0 52%, #2b8bf2 100%);
-  color: #fff;
-  min-height: 128px;
-  display: flex;
-  align-items: center;
-  box-shadow: 0 12px 24px rgba(17, 88, 126, 0.28);
-}
-
-.marketing-content {
-  width: 100%;
-}
-
-.marketing-text {
-  font-weight: 700;
-  font-size: 30px;
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-}
-
-@media (max-width: 560px) {
-  .app-container {
-    padding: 14px 12px 22px;
-  }
-
-  .wallet-balance {
-    font-size: 36px;
-  }
-
-  .wallet-actions {
-    gap: 10px;
-  }
-
-  .action-button {
-    min-height: 76px;
-  }
-
-  .action-title {
-    font-size: 12px;
-  }
-
-  .marketing-text {
-    font-size: 24px;
-  }
-}
-
-.modal-form,
-.receive-content,
-.placeholder-content {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.receive-content,
-.placeholder-content {
-  align-items: center;
-  text-align: center;
-}
-
-.receive-content .address-text {
-  max-width: 100%;
-}
-
-.field-error {
-  margin: 0;
-  color: #ff6f6f;
-  font-size: 12px;
-}
-
-.address-text {
-  margin: 0;
-  word-break: break-all;
-  font-size: 12px;
-  color: #b4c7de;
-  line-height: 1.35;
-}
-
